@@ -1,0 +1,12 @@
+﻿@using FileUpload.Web.Models
+
+@model UploadViewModel
+
+
+<h1>
+    Thank you for uploading you image. Here is the link to share:
+    <br/>
+    <a href="http://localhost:5090/Home/ViewImage?id=@Model.Id">http://localhost:5090/Home/ViewImage?id=@Model.Id</a>
+    <br/>
+    Make sure to give them the password of "@Model.Password"
+</h1>
