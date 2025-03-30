@@ -58,12 +58,8 @@ namespace FileUpload.Controllers
                 if (ids == null)
                 {
                     ids = new List<int>();
-                    ids.Add(id);
                 }
-                else 
-                { 
                     ids.Add(id); 
-                }
             } 
 
             HttpContext.Session.Set("Ids", ids);
@@ -96,8 +92,7 @@ namespace FileUpload.Controllers
     //            validated = "true";
     //            imageMngr.UpdateViews(image);
     //        } 
-    //        else 
-    //        if(password != null)
+    //        else if(password != null)
     //        {
     //            HttpContext.Session.Set("validated", "false");
     //            validated = "false";
