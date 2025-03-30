@@ -2,12 +2,12 @@
 
 @model ImageViewModel
 
-@if (Model.Validated != "true")
+@if (!@Model.Validated)
 {
     <form action="/home/viewimage">
-        <h1>@(Model.Validated == null ? "Enter Password" : "Incorrect Password. Please reenter password")</h1>
+        <h1>@(Model.FirstVisit ? "Enter Password" : "Incorrect Password. Please reenter password")</h1>
         <input name="password" />
-        <input type="hidden" value=@Model.Image.Id name="id" />
+        <input type="hidden" value=@Model.Id name="id" />
         <button>Submit</button>
     </form>
 }
@@ -17,4 +17,4 @@ else
     <h1>Views: @Model.Image.Views</h1>
 }
 
-
+@**<h1>@(Model.Validated == null ? "Enter Password" : "Incorrect Password. Please reenter password")</h1>*@

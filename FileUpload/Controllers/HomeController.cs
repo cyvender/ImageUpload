@@ -50,27 +50,65 @@ namespace FileUpload.Controllers
             var imageMngr = new ImageManager(_connectionString);
             var image = imageMngr.GetImageById(id);
             var ivm = new ImageViewModel();
+            ivm.Id = id;
 
-            string validated = HttpContext.Session.GetString("validated");
+            var ids = HttpContext.Session.Get<List<int>>("Ids");
             if (image.Password == password)
             {
-                HttpContext.Session.Set("validated", "true");
-                validated = "true";
-                imageMngr.UpdateViews(image);
+                if (ids == null)
+                {
+                    ids = new List<int>();
+                    ids.Add(id);
+                }
+                else 
+                { 
+                    ids.Add(id); 
+                }
             } 
-            else 
-            if(password != null)
+
+            HttpContext.Session.Set("Ids", ids);
+            if (password == null)
             {
-                HttpContext.Session.Set("validated", "false");
-                validated = "false";
+                ivm.FirstVisit = true;
+            }
+            if (ids != null && ids.Contains(image.Id))
+            {
+                ivm.Image = image;
+                ivm.Validated = true;
+                ivm.FirstVisit = false;
+                imageMngr.UpdateViews(image);
             }
 
-            ivm.Image = image;
-            ivm.Validated = validated;
-            
             return View(ivm);
         }
     }
+
+    //    public IActionResult ViewImage(int id, int? password)
+    //    {
+    //        var imageMngr = new ImageManager(_connectionString);
+    //        var image = imageMngr.GetImageById(id);
+    //        var ivm = new ImageViewModel();
+
+    //        string validated = HttpContext.Session.GetString("validated");
+    //        if (image.Password == password)
+    //        {
+    //            HttpContext.Session.Set("validated", "true");
+    //            validated = "true";
+    //            imageMngr.UpdateViews(image);
+    //        } 
+    //        else 
+    //        if(password != null)
+    //        {
+    //            HttpContext.Session.Set("validated", "false");
+    //            validated = "false";
+    //        }
+
+    //        ivm.Image = image;
+    //        ivm.Validated = validated;
+
+    //        return View(ivm);
+    //    }
+    //}
 
     public static class SessionExtensions
     {
